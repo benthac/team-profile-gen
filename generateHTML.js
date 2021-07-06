@@ -1,4 +1,4 @@
-function generateHTML(answers) {
+function generateHTML(html) {
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -14,13 +14,15 @@ function generateHTML(answers) {
         <title>Employees</title>
     </head>
     <body>
-        <h1 class="display-1, p-3 mb-2 bg-success text-white">My Team</h1>
-    
-        <div class="card" style="width: 18rem;">
+        <h1 class="display-1, p-3 mb-2 bg-success text-white">My Team</h1>`;
+}
+
+function generateCard(card) {
+    return  `<div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">${job}</h5>
               <h6 class="card-subtitle mb-2 text-muted">${name}</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text"></p>
               <a href="#" class="card-link">${email}</a>
               <a href="#" class="card-link">Another link</a>
             </div>
