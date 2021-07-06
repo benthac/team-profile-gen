@@ -4,6 +4,7 @@ const generateHTML  = require('./generateHTML');
 const Intern = require('./lib/intern');
 const Engineer = require('./lib/engineer');
 const Manager = require('./lib/manager');
+const { type } = require('os');
 const teamArry = [];
 
 const questions = [
@@ -34,39 +35,73 @@ const questions = [
         name: 'job',
         message: 'What is your job title',
         choices: ['manager', 'intern', 'engineer']
-
     },
-]
-.then(function({ name, id, email, job}){
-    newPrompt(name, id, email, job)
-})
+    {
+        type: 'input',
+        name: 'school',
+        message: 'What University are you going to?',
+        when: (res) => res.job === 'intern'
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'what is your github account?',
+        when: (res) => res.job === 'engineer'
+    },  
+    {
+        type: 'input',
+        name: 'officenumber',
+        message: 'What is your office number?',
+        when: (res) => res.job === 'manager'
+    },  
+    {
+        type: 'confirm',
+        name: 'add',
+        message: 'would you like to add another employee?',
 
-// function writeToFile(answers) {
-//     fs.writeFile('index.HTML', generateHTML(answers), function(err) {
-//         if (err) {
-//           return console.log(err);
-//         }; 
-//     });
+    }
+    ]
+
+
+function writeToFile(data) {
+    fs.writeFile('index.HTML', generateHTML(data), function(err) {
+        if (err) {
+          return console.log(err);
+        }; 
+    });
+}
+
+// function newPrompt(name, id, email, job) {
+//     if (job === 'manager') {
+//         return inquirer.prompt([
+//             {
+//                 type: 'input',
+//                 name: 'officenumber',
+//                 message: 'What is your office number'
+//             }
+//         ])
+//     }
+
 // }
 
-function newPrompt(name, id, email, job) {
-    if (job === 'manager') {
-        return inquirer.prompt([
-            {
-                type: 'input',
-                name: 'officenumber',
-                message: 'What is your office number'
-            }
-        ])
-    }
-
-}
-
 function init() {
-    inquirer.prompt(questions)
-        // .then(answers => {
-    // return writeToFile(answers);
-    // })
-}
+    inquirer.prompt(questions).then((res) => {
+        if (res.job === 'intern') {
+            const newIntern = new Intern(res.name, res.id, 
+            res.email, res.school);
+            teamArry.push(newIntern);
+        } else if (res.job === 'engineer') {
+            const newEngineer = new Engineer(res.name,
+                res.id, res.email, res.github);
+                teamArry.push(newEngineer);
+        }
+        if (res.add) {
+            init();
+        } else {
+            console.log('create html');
+            //createHTML()
+        }
+    })
+}       
 
 init();
