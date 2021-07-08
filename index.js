@@ -96,13 +96,13 @@ function init() {
                 teamArry.push(newEngineer);
         } else if (res.job === 'manager') {
             const newManager = new Manager(res.name,
-                res.id, res.email, res.officeNumber);
+                res.id, res.email, res.officenumber);
                 teamArry.push(newManager);
         }
         if (res.add) {
             init();
         } else {
-            console.log('create html');
+            console.log(teamArry);
            writeToFile(teamArry)
         }
     })
