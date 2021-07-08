@@ -14,8 +14,17 @@ function generateHTML(html) {
         <title>Employees</title>
     </head>
     <body>
-        <h1 class="display-1, p-3 mb-2 bg-success text-white">My Team</h1>`;
+        <h1 class="display-1, p-3 mb-2 bg-success text-white">My Team</h1>
+        ${checkData(html)}
+        <script src="./script.js"></script>
+        </body>
+        </html>
+        `;
 }
+
+function checkData(data) {
+    console.log (data);
+} 
 
 function generateCard(card) {
     return  `<div class="card" style="width: 18rem;">

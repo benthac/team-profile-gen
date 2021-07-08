@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateHTML  = require('./generateHTML');
+const {generateHTML}  = require('./generateHTML');
 const Intern = require('./lib/intern');
 const Engineer = require('./lib/engineer');
 const Manager = require('./lib/manager');
@@ -94,12 +94,16 @@ function init() {
             const newEngineer = new Engineer(res.name,
                 res.id, res.email, res.github);
                 teamArry.push(newEngineer);
+        } else if (res.job === 'manager') {
+            const newManager = new Manager(res.name,
+                res.id, res.email, res.officeNumber);
+                teamArry.push(newManager);
         }
         if (res.add) {
             init();
         } else {
             console.log('create html');
-            //createHTML()
+           writeToFile(teamArry)
         }
     })
 }       
